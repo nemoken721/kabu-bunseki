@@ -19,12 +19,12 @@ class Settings(BaseSettings):
     port: int = 8000
     debug: bool = True
 
-    # CORS
-    allowed_origins: str = "http://localhost:3000"
+    # CORS (CORS_ORIGINSまたはALLOWED_ORIGINS環境変数)
+    cors_origins_str: str = "http://localhost:3000"
 
     @property
     def cors_origins(self) -> list[str]:
-        return [origin.strip() for origin in self.allowed_origins.split(",")]
+        return [origin.strip() for origin in self.cors_origins_str.split(",")]
 
     class Config:
         env_file = ".env"
