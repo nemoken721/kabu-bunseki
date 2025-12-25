@@ -145,10 +145,11 @@ export default function StockChart({ stockPrices, companyName }: StockChartProps
       },
       tooltip: {
         callbacks: {
-          label: (context: { dataset: { label?: string }; parsed: { y: number } }) => {
-            const label = context.dataset.label || ''
-            const value = context.parsed.y
-            return `${label}: ¥${value?.toLocaleString()}`
+          label: (context: unknown) => {
+            const ctx = context as { dataset: { label?: string }; parsed: { y: number | null } }
+            const label = ctx.dataset.label || ''
+            const value = ctx.parsed.y
+            return `${label}: ¥${value?.toLocaleString() ?? '-'}`
           },
         },
       },
@@ -168,11 +169,11 @@ export default function StockChart({ stockPrices, companyName }: StockChartProps
           color: 'rgba(0, 0, 0, 0.05)',
         },
         ticks: {
-          callback: (value: string | number) => `¥${Number(value).toLocaleString()}`,
+          callback: (value: unknown) => `¥${Number(value).toLocaleString()}`,
         },
       },
     },
-  }
+  } as const
 
   // ローソク足用のデータ
   const candlestickData = useMemo(() => {
@@ -433,7 +434,7 @@ function VolumeChart({ stockPrices }: { stockPrices: StockPrice[] }) {
           display: false,
         },
         ticks: {
-          callback: (value: string | number) => {
+          callback: (value: unknown) => {
             const num = Number(value)
             if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
             if (num >= 1000) return `${(num / 1000).toFixed(0)}K`
@@ -442,7 +443,7 @@ function VolumeChart({ stockPrices }: { stockPrices: StockPrice[] }) {
         },
       },
     },
-  }
+  } as const
 
   return <Line data={data} options={options} />
 }
