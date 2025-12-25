@@ -28,7 +28,7 @@ export default function CompanyList() {
   }
 
   // セクター一覧を取得
-  const sectors = ['all', ...new Set(companies.map(c => c.sector).filter(Boolean))]
+  const sectors: string[] = ['all', ...new Set(companies.map(c => c.sector).filter((s): s is string => s !== null))]
 
   // フィルタリング
   const filteredCompanies = selectedSector === 'all'
