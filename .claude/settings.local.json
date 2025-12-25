@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m venv:*)",
+      "Bash(.venvScriptspip install --upgrade pip)",
+      "Bash(.venv\\\\Scripts\\\\pip.exe install --upgrade pip)",
+      "Bash(\".venv/Scripts/pip.exe\" install --upgrade pip)",
+      "Bash(\".venv/Scripts/python.exe\" -m pip install --upgrade pip)",
+      "Bash(\".venv/Scripts/python.exe\" -m pip install -r backend/requirements.txt)",
+      "Bash(\".venv/Scripts/pip.exe\" install google-generativeai)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)",
+      "Bash(git init:*)",
+      "Bash(npm install:*)",
+      "Bash(\"../.venv/Scripts/python.exe\" -c \"from app.main import app; print\\(''FastAPI app loaded successfully''\\)\")",
+      "Bash(npm run dev:*)",
+      "Bash(\".venv/Scripts/pip.exe\" install supabase)",
+      "Bash(\"../.venv/Scripts/python.exe\" scripts/seed_companies.py)",
+      "Bash(set:*)",
+      "Bash(\"../.venv/Scripts/python.exe\" -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000)",
+      "Bash(timeout:*)",
+      "Bash(curl:*)",
+      "Bash(ping:*)",
+      "Bash(\"../.venv/Scripts/python.exe\" scripts/seed_financial_data.py)",
+      "Bash(\".venv/Scripts/pip.exe\" install google-genai)",
+      "Bash(npm uninstall:*)",
+      "Bash(\".venv/Scripts/pip.exe\" install PyJWT)",
+      "Bash(../.venv/Scripts/python.exe:*)",
+      "Bash(../.venv/Scripts/pip.exe list:*)",
+      "Bash(python -c:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
