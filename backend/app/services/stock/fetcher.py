@@ -1,10 +1,10 @@
 """
 株価データ取得サービス
-Stooq および Yahoo Finance から株価データを取得
+yfinance を使用して株価データを取得
 """
 
 import pandas as pd
-import pandas_datareader.data as web
+import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Optional
 import logging
@@ -22,7 +22,7 @@ class StockDataFetcher:
         self,
         code: str,
         years: int = 10,
-        source: str = "stooq"
+        source: str = "yahoo"
     ) -> Optional[pd.DataFrame]:
         """
         指定した銘柄の株価データを取得
@@ -30,7 +30,7 @@ class StockDataFetcher:
         Args:
             code: 証券コード（例: "7203" for トヨタ）
             years: 取得する年数（デフォルト: 10年）
-            source: データソース（"stooq" or "yahoo"）
+            source: データソース（現在は "yahoo" のみ対応）
 
         Returns:
             株価データのDataFrame、取得失敗時はNone
@@ -38,14 +38,11 @@ class StockDataFetcher:
         end_date = datetime.now()
         start_date = end_date - timedelta(days=years * 365)
 
-        # 日本株の場合、Stooq用のコード形式に変換
-        ticker = self._format_ticker(code, source)
+        # 日本株の場合、Yahoo Finance用のコード形式に変換
+        ticker = self._format_ticker(code)
 
         try:
-            if source == "stooq":
-                df = self._fetch_from_stooq(ticker, start_date, end_date)
-            else:
-                df = self._fetch_from_yahoo(ticker, start_date, end_date)
+            df = self._fetch_from_yahoo(ticker, start_date, end_date)
 
             if df is not None and not df.empty:
                 df = self._normalize_dataframe(df)
@@ -57,37 +54,16 @@ class StockDataFetcher:
 
         except Exception as e:
             logger.error(f"株価データ取得エラー ({code}): {e}")
-            # フォールバック: 別のソースを試す
-            if source == "stooq":
-                logger.info(f"Yahoo Finance にフォールバック: {code}")
-                return self.fetch_stock_data(code, years, "yahoo")
             return None
 
-    def _format_ticker(self, code: str, source: str) -> str:
+    def _format_ticker(self, code: str) -> str:
         """
-        データソースに応じたティッカーシンボル形式に変換
+        Yahoo Finance用のティッカーシンボル形式に変換
         """
         # 数字のみの場合は日本株と判断
         if code.isdigit():
-            if source == "stooq":
-                return f"{code}.JP"
-            else:  # yahoo
-                return f"{code}.T"
+            return f"{code}.T"
         return code
-
-    def _fetch_from_stooq(
-        self,
-        ticker: str,
-        start_date: datetime,
-        end_date: datetime
-    ) -> Optional[pd.DataFrame]:
-        """Stooq からデータ取得"""
-        try:
-            df = web.DataReader(ticker, "stooq", start_date, end_date)
-            return df
-        except Exception as e:
-            logger.error(f"Stooq取得エラー: {e}")
-            return None
 
     def _fetch_from_yahoo(
         self,
@@ -95,9 +71,10 @@ class StockDataFetcher:
         start_date: datetime,
         end_date: datetime
     ) -> Optional[pd.DataFrame]:
-        """Yahoo Finance からデータ取得"""
+        """Yahoo Finance からデータ取得 (yfinance使用)"""
         try:
-            df = web.DataReader(ticker, "yahoo", start_date, end_date)
+            stock = yf.Ticker(ticker)
+            df = stock.history(start=start_date, end=end_date)
             return df
         except Exception as e:
             logger.error(f"Yahoo取得エラー: {e}")
