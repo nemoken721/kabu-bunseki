@@ -27,7 +27,13 @@
       "Bash(../.venv/Scripts/python.exe:*)",
       "Bash(../.venv/Scripts/pip.exe list:*)",
       "Bash(python -c:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: 10年長期分析＆AI予測レポート生成 Webアプリケーション\n\nFeatures:\n- FastAPI backend with Supabase integration\n- Next.js 15 frontend with App Router\n- Google Gemini AI integration for analysis reports\n- EDINET API integration for financial statements\n- User authentication with Supabase Auth\n- Watchlist functionality\n- Stock price visualization with candlestick charts\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(gh:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix TypeScript type error in analysis report\n\n- Update AnalysisReport interface to match API response\n- Change from old fields \\(business_analysis, etc.\\) to new fields \\(features, prediction, reasoning\\)\n- Fix report display section to use correct field names\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }

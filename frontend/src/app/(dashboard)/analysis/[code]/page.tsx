@@ -38,12 +38,9 @@ interface LatestPriceResponse {
 
 interface AnalysisReport {
   summary: string
-  business_analysis: string
-  financial_analysis: string
-  stock_analysis: string
-  risk_factors: string
-  outlook: string
-  full_report: string
+  features: string
+  prediction: string
+  reasoning: string
 }
 
 interface PageProps {
@@ -563,43 +560,27 @@ export default function AnalysisPage({ params }: PageProps) {
                   </div>
                 )}
 
-                {/* 事業分析 */}
-                {report.business_analysis && (
+                {/* 企業特徴 */}
+                {report.features && (
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">事業分析</h3>
-                    <p className="text-gray-600 whitespace-pre-wrap">{report.business_analysis}</p>
+                    <h3 className="font-semibold text-gray-800 mb-2">企業特徴・強み</h3>
+                    <p className="text-gray-600 whitespace-pre-wrap">{report.features}</p>
                   </div>
                 )}
 
-                {/* 財務分析 */}
-                {report.financial_analysis && (
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">財務分析</h3>
-                    <p className="text-gray-600 whitespace-pre-wrap">{report.financial_analysis}</p>
-                  </div>
-                )}
-
-                {/* 株価分析 */}
-                {report.stock_analysis && (
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">株価分析</h3>
-                    <p className="text-gray-600 whitespace-pre-wrap">{report.stock_analysis}</p>
-                  </div>
-                )}
-
-                {/* リスク要因 */}
-                {report.risk_factors && (
-                  <div className="bg-red-50 rounded-lg p-4">
-                    <h3 className="font-semibold text-red-800 mb-2">リスク要因</h3>
-                    <p className="text-gray-700 whitespace-pre-wrap">{report.risk_factors}</p>
-                  </div>
-                )}
-
-                {/* 今後の見通し */}
-                {report.outlook && (
+                {/* 予測・見通し */}
+                {report.prediction && (
                   <div className="bg-green-50 rounded-lg p-4">
-                    <h3 className="font-semibold text-green-800 mb-2">今後の見通し</h3>
-                    <p className="text-gray-700 whitespace-pre-wrap">{report.outlook}</p>
+                    <h3 className="font-semibold text-green-800 mb-2">今後の予測・見通し</h3>
+                    <p className="text-gray-700 whitespace-pre-wrap">{report.prediction}</p>
+                  </div>
+                )}
+
+                {/* 分析根拠 */}
+                {report.reasoning && (
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">分析根拠</h3>
+                    <p className="text-gray-600 whitespace-pre-wrap">{report.reasoning}</p>
                   </div>
                 )}
 
